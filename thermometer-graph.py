@@ -549,12 +549,14 @@ def graph(input):
     printstring(f"{MAX:02}", 2, 162, 2, False, False, WHITE)
     printstring(f"{MIN:02}", 2, 220, 2, False, False, WHITE)
 
-    LCD.fill_rect(35, 243 - round(average * SCALE), 200, 1, GREEN)
+    LCD.fill_rect(35, round(238 - (average - MIN) * SCALE), 200, 1, GREEN)
 
     for i in range(len(input)):
-        LCD.pixel(i + 36, 243 - round(input[i] * SCALE), WHITE)
+        LCD.pixel(i + 36, round(238 - (input[i] - MIN) * SCALE), WHITE)
 
-    printstring("Ave.", 45, 230 - round(average * SCALE), 1, False, False, GREEN)
+    printstring(
+        "Ave.", 45, round(225 - (average - MIN) * SCALE), 1, False, False, GREEN
+    )
 
 
 pwm = PWM(Pin(BL))  # Screen Brightness
