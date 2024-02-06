@@ -538,24 +538,28 @@ def iled_off():
 
 
 def graph(input):
-    MIN, MAX = 5, 25
-    SCALE = 4
-
     average = sum(input) / len(input)
     tmin, tmax = min(input), max(input)
+    range = tmax - tmin
+
+    if range < 1:
+        range = 1
+        tmin, tmax = average - 0.5, average + 0.5
+
+    scale = 80 / range
 
     LCD.fill_rect(35, 159, 1, 80, WHITE)
     LCD.fill_rect(35, 239, 200, 1, WHITE)
-    printstring(f"{MAX:02}", 2, 162, 2, False, False, WHITE)
-    printstring(f"{MIN:02}", 2, 220, 2, False, False, WHITE)
+    printstring(f"{tmax:02.0f}", 2, 162, 2, False, False, WHITE)
+    printstring(f"{tmin:02.0f}", 2, 220, 2, False, False, WHITE)
 
-    LCD.fill_rect(35, round(238 - (average - MIN) * SCALE), 200, 1, GREEN)
+    LCD.fill_rect(35, round(238 - (average - tmin) * scale), 200, 1, GREEN)
 
     for i in range(len(input)):
-        LCD.pixel(i + 36, round(238 - (input[i] - MIN) * SCALE), WHITE)
+        LCD.pixel(i + 36, round(238 - (input[i] - tmin) * scale), WHITE)
 
     printstring(
-        "Ave.", 45, round(225 - (average - MIN) * SCALE), 1, False, False, GREEN
+        "Ave.", 45, round(225 - (average - tmin) * scale), 1, False, False, GREEN
     )
 
 
