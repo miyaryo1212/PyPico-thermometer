@@ -191,6 +191,7 @@ BLACK = colour(0, 0, 0)
 BLUE = colour(34, 114, 255)
 GRAY = colour(200, 200, 200)
 GREEN = colour(13, 255, 34)
+LIGHTGRAY = colour(50, 50, 50)
 RED = colour(255, 23, 12)
 WHITE = colour(255, 255, 255)
 
@@ -553,11 +554,17 @@ def graph(input):
     printstring(f"{tmax:02.0f}", 2, 162, 2, False, False, WHITE)
     printstring(f"{tmin:02.0f}", 2, 220, 2, False, False, WHITE)
 
-    LCD.fill_rect(35, round(238 - (average - tmin) * scale), 200, 1, GREEN)
-
     for i in range(len(input)):
+        LCD.fill_rect(
+            i + 36,
+            round(239 - (input[i] - tmin) * scale),
+            1,
+            round((input[i] - tmin) * scale),
+            LIGHTGRAY,
+        )
         LCD.pixel(i + 36, round(238 - (input[i] - tmin) * scale), WHITE)
 
+    LCD.fill_rect(35, round(238 - (average - tmin) * scale), 200, 1, GREEN)
     printstring(
         "Ave.", 45, round(225 - (average - tmin) * scale), 1, False, False, GREEN
     )
